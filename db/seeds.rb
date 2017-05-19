@@ -17,6 +17,13 @@ require 'random_data'
    )
  end
 
+puts "#{Post.count}"
+ new_post = Post.find_or_create_by(title: "New title", body: "New body")
+puts "#{Post.count}"
+puts "#{Comment.count}"
+ Comment.find_or_create_by(body: "New comment body", post: new_post)
+puts "#{Comment.count}"
+
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
