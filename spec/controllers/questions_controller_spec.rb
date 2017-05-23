@@ -17,7 +17,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe "GET #show" do
     it "returns http success" do
-      get :show
+      get :show, {id: my_question.id}
       expect(response).to have_http_status(:success)
     end
     it "renders the #show view" do
@@ -50,16 +50,16 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe "POST #create" do
     it "increases the number of Question by 1" do
-      expect{question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}}.to change(Question,:count).by(1)
+      expect{post :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}}.to change(Question,:count).by(1)
     end
 
     it "assigns the new question to @question" do
-      question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}
+      post :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}
       expect(assigns(:question)).to eq Question.last
     end
 
     it "redirects to the new question" do
-      question :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}
+      post :create, question: {title: RandomData.random_sentence, body: RandomData.random_paragraph, resolved: false}
       expect(response).to redirect_to Question.last
     end
   end
