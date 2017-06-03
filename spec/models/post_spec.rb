@@ -77,4 +77,23 @@ RSpec.describe Post, type: :model do
        end
      end
    end
+
+   describe "after_create" do
+     before do
+       @another_post = Post.new(title: "title", body: "new post body new post body", user: user)
+     end
+
+     it "sends an email to the user who created the post" do
+       expect(FavoriteMailer).to receive(:new_post).with(user, @another_post).and_return(double(deliver_now: true))
+
+       @another_post.save!
+     end
+
+ # #24
+     it "does not send emails to users who didn't create the post" do
+       expect(FavoriteMailer).not_to receive(:new_post)
+
+       @another_post.save!
+     end
+   end
 end
