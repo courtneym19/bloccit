@@ -18,9 +18,35 @@
      </div>
    </div>
  </div>
- 
+
  <h2>Posts</h2>
- <%= render @user.posts %>
+ <% if @user.posts.empty? %>
+  <p><%= @user.name %> has not submitted any posts yet.</p>
+<% else %>
+  <%= render @user.posts %>
+<% end %>
 
  <h2>Comments</h2>
- <%= render @user.comments %>
+ <% if @user.comments.empty? %>
+  <p><%= @user.name %> has not submitted any comments yet.</p>
+<% else %>
+  <%= render @user.comments %>
+<% end %>
+
+<h2>Favorites</h2>
+<% if @user.favorites.empty? %>
+  <p><%= @user.name %> has not favorited any posts yet.</p>
+<% else %>
+  <div class="row">
+  <div class="col-md-8">
+    <% @user.favorites.each do |favorite| %>
+    <div>
+      <div class="pull-left">
+        <%= image_tag current_user.avatar_url(64), class: "gravatar" %>
+      </div>
+      <%= render 'posts/post', post: favorite.post %>
+    </div>
+    <% end %>
+  </div>
+  </div>
+<% end %>
